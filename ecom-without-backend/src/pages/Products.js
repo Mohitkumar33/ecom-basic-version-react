@@ -1,38 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./products.css";
-import { productsData } from "../backend/db/productsData";
 import { Navbar } from "../components/navbar/Navbar";
 import { Footer } from "../components/footer/Footer";
-import { useFilters } from "../contexts/filterProducts";
-import {
-  filterByPrice,
-  dataAfterPriceRange,
-  filterByDiscount,
-  filterByGender,
-  filterByRating,
-  filterBySeason,
-} from "../utilitites/index";
+import { GlobalContext } from "../contexts/Provider";
+import * as ActionTypes from "../contexts/ActionTypes";
 
 const Products = () => {
-  const { state, dispatch } = useFilters();
-  const finalData = filterByDiscount(
-    state.discount,
-    filterByGender(
-      state.men,
-      state.women,
-      filterByRating(
-        state.rating,
-        filterBySeason(
-          state.summer,
-          state.winter,
-          filterByPrice(
-            state.sortByPrice,
-            dataAfterPriceRange(state.priceRange, productsData)
-          )
-        )
-      )
-    )
-  );
+  const { state, dispatch } = useContext(GlobalContext);
   return (
     <>
       <Navbar />
@@ -43,17 +17,18 @@ const Products = () => {
             <h3>Filters</h3>
             <button
               onClick={() =>
-                dispatch({
-                  ...state,
-                  priceRange: 5000,
-                  men: null,
-                  women: null,
-                  summer: null,
-                  winter: null,
-                  sortByPrice: null,
-                  rating: null,
-                  discount: null,
-                })
+                // dispatch({
+                //   ...state,
+                //   priceRange: 5000,
+                //   men: null,
+                //   women: null,
+                //   summer: null,
+                //   winter: null,
+                //   sortByPrice: null,
+                //   rating: null,
+                //   discount: null,
+                // })
+                {}
               }
             >
               Clear
@@ -71,12 +46,16 @@ const Products = () => {
               name="points"
               min={0}
               max={5000}
-              defaultValue={state.priceRange}
-              onChange={(e) =>
-                dispatch({ ...state, priceRange: e.target.value })
-              }
+              defaultValue={5000}
+              onChange={(e) => {
+                console.log(e.target.value);
+                dispatch({
+                  type: ActionTypes.SET_PRICE,
+                  payload: { price: parseInt(e.target.value) },
+                });
+              }}
             />
-            <div>Price range: 0 to{state.priceRange}</div>
+            <div>Price range: 0 to</div>
           </div>
 
           <h3>Gender</h3>
@@ -84,18 +63,22 @@ const Products = () => {
             <label>
               <input
                 type="checkbox"
-                checked={state.men}
-                onChange={(e) => dispatch({ ...state, men: e.target.checked })}
+                checked={false}
+                // onChange={(e) => {
+                //   console.log(e.target.value);
+                //   dispatch({ ...state, men: e.target.checked });
+                // }}
               />
               Men Clothing
             </label>
             <label>
               <input
                 type="checkbox"
-                checked={state.women}
-                onChange={(e) =>
-                  dispatch({ ...state, women: e.target.checked })
-                }
+                checked={false}
+                // onChange={(e) => {
+                //   console.log(e.target.value);
+                //   dispatch({ ...state, women: e.target.checked });
+                // }}
               />
               Women Clothing
             </label>
@@ -105,10 +88,11 @@ const Products = () => {
             <label>
               <input
                 type="checkbox"
-                checked={state.summer}
-                onChange={(e) =>
-                  dispatch({ ...state, summer: e.target.checked })
-                }
+                // checked={state.summer}
+                // onChange={(e) => {
+                //   console.log(e.target.value);
+                //   dispatch({ ...state, summer: e.target.checked });
+                // }}
               />
               Summer
             </label>
@@ -116,10 +100,10 @@ const Products = () => {
             <label>
               <input
                 type="checkbox"
-                checked={state.winter}
-                onChange={(e) =>
-                  dispatch({ ...state, winter: e.target.checked })
-                }
+                // checked={state.winter}
+                // onChange={(e) =>
+                //   dispatch({ ...state, winter: e.target.checked })
+                // }
               />
               Winter
             </label>
@@ -131,7 +115,12 @@ const Products = () => {
                 type="radio"
                 value={4}
                 name="star_rating"
-                onChange={(e) => dispatch({ ...state, rating: e.target.value })}
+                onChange={(e) =>
+                  dispatch({
+                    type: ActionTypes.SET_RATING,
+                    payload: { rating: e.target.value },
+                  })
+                }
               />
               4 Stars & above
             </label>
@@ -140,7 +129,12 @@ const Products = () => {
                 type="radio"
                 value={3}
                 name="star_rating"
-                onChange={(e) => dispatch({ ...state, rating: e.target.value })}
+                onChange={(e) =>
+                  dispatch({
+                    type: ActionTypes.SET_RATING,
+                    payload: { rating: e.target.value },
+                  })
+                }
               />
               3 Stars & above
             </label>
@@ -149,7 +143,12 @@ const Products = () => {
                 type="radio"
                 value={2}
                 name="star_rating"
-                onChange={(e) => dispatch({ ...state, rating: e.target.value })}
+                onChange={(e) =>
+                  dispatch({
+                    type: ActionTypes.SET_RATING,
+                    payload: { rating: e.target.value },
+                  })
+                }
               />
               2 Stars & above
             </label>
@@ -158,7 +157,12 @@ const Products = () => {
                 type="radio"
                 value={1}
                 name="star_rating"
-                onChange={(e) => dispatch({ ...state, rating: e.target.value })}
+                onChange={(e) =>
+                  dispatch({
+                    type: ActionTypes.SET_RATING,
+                    payload: { rating: e.target.value },
+                  })
+                }
               />
               1 Stars & above
             </label>
@@ -168,10 +172,13 @@ const Products = () => {
             <label>
               <input
                 type="radio"
-                value="PRICE_LOW_TO_HIGH"
+                value="lth"
                 name="price_sort"
                 onChange={(e) =>
-                  dispatch({ ...state, sortByPrice: e.target.value })
+                  dispatch({
+                    type: ActionTypes.SET_SORTBY,
+                    payload: { sort: e.target.value },
+                  })
                 }
               />
               Price - Low to High
@@ -179,10 +186,13 @@ const Products = () => {
             <label>
               <input
                 type="radio"
-                value="PRICE_HIGH_TO_LOW"
+                value="htl"
                 name="price_sort"
                 onChange={(e) =>
-                  dispatch({ ...state, sortByPrice: e.target.value })
+                  dispatch({
+                    type: ActionTypes.SET_SORTBY,
+                    payload: { sort: e.target.value },
+                  })
                 }
               />
               Price - High to Low
@@ -196,7 +206,10 @@ const Products = () => {
                 value={50}
                 name="discount"
                 onChange={(e) =>
-                  dispatch({ ...state, discount: e.target.value })
+                  dispatch({
+                    type: ActionTypes.SET_DISCOUNT,
+                    payload: { discount: e.target.value },
+                  })
                 }
               />
               50% & above
@@ -207,7 +220,10 @@ const Products = () => {
                 value={40}
                 name="discount"
                 onChange={(e) =>
-                  dispatch({ ...state, discount: e.target.value })
+                  dispatch({
+                    type: ActionTypes.SET_DISCOUNT,
+                    payload: { discount: e.target.value },
+                  })
                 }
               />
               40% & above
@@ -218,7 +234,10 @@ const Products = () => {
                 value={30}
                 name="discount"
                 onChange={(e) =>
-                  dispatch({ ...state, discount: e.target.value })
+                  dispatch({
+                    type: ActionTypes.SET_DISCOUNT,
+                    payload: { discount: e.target.value },
+                  })
                 }
               />
               30% & above
@@ -229,7 +248,10 @@ const Products = () => {
                 value={20}
                 name="discount"
                 onChange={(e) =>
-                  dispatch({ ...state, discount: e.target.value })
+                  dispatch({
+                    type: ActionTypes.SET_DISCOUNT,
+                    payload: { discount: e.target.value },
+                  })
                 }
               />
               20% & above
@@ -240,21 +262,13 @@ const Products = () => {
                 value={10}
                 name="discount"
                 onChange={(e) =>
-                  dispatch({ ...state, discount: e.target.value })
+                  dispatch({
+                    type: ActionTypes.SET_DISCOUNT,
+                    payload: { discount: e.target.value },
+                  })
                 }
               />
               10% & above
-            </label>
-            <label>
-              <input
-                type="radio"
-                value={0}
-                name="discount"
-                onChange={(e) =>
-                  dispatch({ ...state, discount: e.target.value })
-                }
-              />
-              No discount
             </label>
           </div>
         </aside>
@@ -266,11 +280,11 @@ const Products = () => {
             <h3 className="listing-heading">
               Showing All Products
               <span>
-                <small>(Showing {finalData.length} products)</small>
+                <small>(Showing {state.products.length} products)</small>
               </span>
             </h3>
             <div className="listing-column">
-              {finalData.map((i) => (
+              {state.products.map((i) => (
                 <div className="card-2" key={i._id}>
                   <div className="card-2-col-1">
                     <img src={i.image} alt={i.name} />
@@ -309,13 +323,23 @@ const Products = () => {
                   </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="card-icon-products"
+                    className={
+                      i.inWishlist
+                        ? "card-icon-products-red"
+                        : "card-icon-products"
+                    }
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    onClick={()=>{
-                       state.wishlist = state.wishlist.concat(i)
-                      console.log(state.wishlist)
+                    onClick={() => {
+                      dispatch({
+                        type: i.inWishlist
+                          ? ActionTypes.REMOVE_FROM_WISHLIST
+                          : ActionTypes.ADD_TO_WISHLIST,
+                        payload: {
+                          temp_id: i.temp_id,
+                        },
+                      });
                     }}
                   >
                     <path

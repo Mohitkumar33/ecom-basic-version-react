@@ -1,0 +1,9 @@
+export const SET_GENDER = "SET_GENDER";
+export const SET_SEASON = "SET_SEASON";
+export const SET_RATING = "SET_RATING";
+export const SET_SORTBY = "SET_SORTBY";
+export const SET_DISCOUNT = "SET_DISCOUNT";
+export const SET_PRICE = "SET_PRICE";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const ADD_TO_WISHLIST = "ADD_TO_WISHLIST";
+export const REMOVE_FROM_WISHLIST = "REMOVE_FROM_WISHLIST";

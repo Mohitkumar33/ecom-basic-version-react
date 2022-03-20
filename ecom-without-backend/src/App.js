@@ -5,10 +5,10 @@ import { Login } from "./pages/Login";
 import { Products } from "./pages/Products";
 import { Signup } from "./pages/Signup";
 import { Wishlist } from "./pages/Wishlist";
-
+import { GlobalProvider } from "./contexts/Provider";
 const App = () => {
   return (
-    <>
+    <GlobalProvider>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
@@ -17,7 +17,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
-    </>
+    </GlobalProvider>
   );
 };
 
