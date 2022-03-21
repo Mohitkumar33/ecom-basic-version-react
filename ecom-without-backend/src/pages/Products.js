@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./products.css";
 import { Navbar } from "../components/navbar/Navbar";
 import { Footer } from "../components/footer/Footer";
@@ -6,6 +6,7 @@ import { GlobalContext } from "../contexts/Provider";
 import * as ActionTypes from "../contexts/ActionTypes";
 
 const Products = () => {
+  const [openToast, setOpenToast] = useState(false);
   const { state, dispatch } = useContext(GlobalContext);
   return (
     <>
@@ -340,6 +341,10 @@ const Products = () => {
                           temp_id: i.temp_id,
                         },
                       });
+                      setOpenToast(true)
+                      setTimeout(()=>{
+                        setOpenToast(false)
+                      },3000)
                     }}
                   >
                     <path
@@ -355,6 +360,7 @@ const Products = () => {
           </div>
         </div>
       </div>
+      {openToast && <div class="toast-1">Item added to wishlist</div>}
       <Footer />
     </>
   );

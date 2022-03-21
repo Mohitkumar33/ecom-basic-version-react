@@ -1,9 +1,9 @@
 import React, { createContext, useReducer } from "react";
 import rootReducer from "./rootReducer";
-import { productsData } from "../backend/db/productsData";
+// import { productsData } from "../backend/db/productsData";
 
 const initialState = {
-  products: productsData,
+  products: [],
   cart: [],
   wishlist: [],
   filters: {

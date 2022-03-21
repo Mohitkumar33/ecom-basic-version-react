@@ -61,6 +61,10 @@ const rootReducer = (state, { type, payload }) => {
       return { ...state, products: products, wishlist: wishlist };
     }
 
+    case ActionTypes.SET_PRODUCTS:{
+      return {...state,products:payload.products}
+    }
+
     default:
       return state;
   }
