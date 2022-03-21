@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useFilters } from "../../contexts/filterProducts";
 import "./navbar.css";
 
 const Navbar = () => {
+  const {state,dispatch} = useFilters()
   return (
     <>
       <nav>
@@ -16,7 +18,7 @@ const Navbar = () => {
           </i>
         </div>
         <div className="input-field">
-          <input type="text" placeholder="search" />
+          <input type="text" placeholder="search" value={state.searchInput} onChange={(e)=>dispatch({...state,searchInput:e.target.value})} />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="fa-search"

@@ -11,11 +11,12 @@ import {
   filterByGender,
   filterByRating,
   filterBySeason,
+  filterBySearch,
 } from "../utilitites/index";
 
 const Products = () => {
   const { state, dispatch } = useFilters();
-  const finalData = filterByDiscount(
+  const dataWithoutSearch = filterByDiscount(
     state.discount,
     filterByGender(
       state.men,
@@ -33,6 +34,7 @@ const Products = () => {
       )
     )
   );
+  const finalData = filterBySearch(state.searchInput,dataWithoutSearch)
   return (
     <>
       <Navbar />
@@ -53,6 +55,7 @@ const Products = () => {
                   sortByPrice: null,
                   rating: null,
                   discount: null,
+                  searchInput:"",
                 })
               }
             >
@@ -61,7 +64,7 @@ const Products = () => {
           </div>
           <h3>Price</h3>
           <div className="slider-input-setting">
-            <label for="slider-input">
+            <label htmlFor="slider-input">
               0 <span>2500</span> <span>5000</span>
             </label>
             <input
@@ -315,7 +318,7 @@ const Products = () => {
                     stroke="currentColor"
                     onClick={()=>{
                        state.wishlist = state.wishlist.concat(i)
-                      console.log(state.wishlist)
+                      // doInWishlist(i._id)
                     }}
                   >
                     <path

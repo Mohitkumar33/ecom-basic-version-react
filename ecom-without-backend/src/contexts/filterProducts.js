@@ -15,6 +15,7 @@ const FilterProvider = ({children})=>{
         sortByPrice:null,
         rating:null,
         discount:null,
+        searchInput:null,
         wishlist:[],
         cart:[],
     })
